@@ -64,6 +64,12 @@ Call `emscripten_webgl_commit_frame()` only when `wx_glx_enabled` is false, incl
 
 Guard `GL.resizeOffscreenFramebuffer()` when `OFFSCREEN_FRAMEBUFFER` is absent. Keep the existing GLX compatibility handling for GLES timestamp queries and unsupported runtime GDExtension loading if those paths exist in the target branch.
 
+### Canvas nine-patch compatibility
+
+Some WXGLX replay drivers drop the GLES3 `USE_NINEPATCH` shader variant, which makes `NinePatchRect` content disappear while ordinary texture rectangles still render. In `RendererCanvasCull::canvas_item_add_nine_patch()`, expand valid nine-patch draws into regular `canvas_item_add_texture_rect_region()` commands before they reach the renderer, but only while the pinned runtime mode is WXGLX.
+
+Keep the expansion behind `WECHAT_GLX_EXPERIMENTAL`, query the existing runtime-mode bridge once, and preserve stretch, tile, tile-fit, `draw_center`, source regions, and mirrored destination rectangles. Bound tiled expansion to 64 pieces per axis and use a single stretched middle segment above that limit. Invalid inputs and the standard-WebGL runtime path must continue through Godot's original `CommandNinePatch` implementation.
+
 ## Runtime Shell And Startup Configuration
 
 Load configuration before `godot-loader.js`:
