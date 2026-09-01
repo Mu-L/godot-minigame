@@ -5,7 +5,9 @@
   "base_label": "origin/4.6 (4.6.2-rc snapshot as of 2026-04-11)",
 	"core_patch_series": [
 		"core/001-build-and-runtime-glue.patch",
-		"core/002-native-audio-routing.patch"
+		"core/002-native-audio-routing.patch",
+		"core/003-wxglx-nine-patch-expansion.patch",
+		"core/004-wxglx-nine-patch-runtime-scope.patch"
 	],
   "optional_features": {
     "audio-worker": {

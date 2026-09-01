@@ -117,6 +117,7 @@ jobs:
           cd godot
           rg -n "WXMEMFS|write_offset|getWindowInfo|showKeyboard|wx.exitMiniProgram|wasm_simd|wasm\.br" platform/web modules || true
           node ../godot-minigame/skills/tests/test_wechat_audio_context_source_reuse.js platform/web/js/libs/library_godot_audio.js
+          node ../godot-minigame/skills/tests/test_wxglx_nine_patch_patch.js .
           node ../godot-minigame/skills/tests/test_godot_process_commit_frame.js
 
       # ============================================================
