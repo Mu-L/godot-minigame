@@ -116,6 +116,7 @@ jobs:
         run: |
           cd godot
           rg -n "WXMEMFS|write_offset|getWindowInfo|showKeyboard|wx.exitMiniProgram|wasm_simd|wasm\.br" platform/web modules || true
+          node ../godot-minigame/skills/tests/test_wechat_audio_context_source_reuse.js platform/web/js/libs/library_godot_audio.js
           node ../godot-minigame/skills/tests/test_godot_process_commit_frame.js
 
       # ============================================================
@@ -177,6 +178,10 @@ jobs:
           fi
           if rg -q "FS.mount\\(IDBFS" action-artifact/engine/godot.js; then
             echo "godot.js was not post-processed"
+            exit 1
+          fi
+          if rg -q "contextPool\\.pop" action-artifact/engine/godot.js; then
+            echo "godot.js still reuses InnerAudioContext across different sources"
             exit 1
           fi
 
